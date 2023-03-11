@@ -3,7 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  OneToOne,
+  JoinColumn,
+  OneToMany,
 } from 'typeorm';
+import { UserProfileEntity } from './UserProfile';
+import { PostEntity } from './Post';
 
 @Entity('users')
 export class UserEntity {
@@ -21,4 +26,11 @@ export class UserEntity {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToOne(() => UserProfileEntity)
+  @JoinColumn()
+  profile: UserProfileEntity;
+
+  @OneToMany(() => PostEntity, (post) => post.user)
+  posts: PostEntity[];
 }

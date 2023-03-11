@@ -8,6 +8,8 @@ import {
   Put,
 } from '@nestjs/common';
 import { CreateUser } from 'src/user/dtos/CreateUser.dto';
+import { CreateUserPost } from 'src/user/dtos/CreateUserPost.dto';
+import { CreateUserProfile } from 'src/user/dtos/CreateUserProfile.dto';
 import { UpdateUser } from 'src/user/dtos/UpdateUser.dto';
 import { UserService } from 'src/user/services/user/user.service';
 
@@ -33,5 +35,21 @@ export class UserController {
   @Delete(':id')
   deleteUser(@Param('id') id: number) {
     return this.userServices.deleteUser(id);
+  }
+
+  @Post(':id/profile')
+  createProfile(
+    @Param('id') id: number,
+    @Body() userProfileDetails: CreateUserProfile,
+  ) {
+    return this.userServices.createUserProfile(id, userProfileDetails);
+  }
+
+  @Post(':id/posts')
+  createUserPosts(
+    @Param('id') id: number,
+    @Body() userPostDetails: CreateUserPost,
+  ) {
+    return this.userServices.createUserPost(id, userPostDetails);
   }
 }
